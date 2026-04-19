@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#36B7F5" />
+  <title>Jood Kids</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="brand-header">
+      <button id="brandSecretButton" class="brand-button" aria-label="Jood Kids">
+        <img id="heroLogo" class="brand-logo" src="./assets/jood-logo.png" alt="Jood Kids" />
+        <div class="brand-title-wrap">
+          <h1 id="heroCompanyName" class="brand-title">Jood Kids</h1>
+        </div>
+      </button>
+      <a id="websiteLinkTop" class="brand-link hidden" href="#" target="_blank" rel="noopener noreferrer" aria-label="الموقع الرسمي">
+        <span class="icon-holder small">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 4 9 14 14 0 0 1-4 9 14 14 0 0 1-4-9 14 14 0 0 1 4-9z"></path></svg>
+        </span>
+      </a>
+    </header>
+
+    <main class="stack">
+      <section class="hero-card surface-card">
+        <div class="hero-gradient hero-gradient-a"></div>
+        <div class="hero-gradient hero-gradient-b"></div>
+        <div class="contact-actions" id="contactGrid"></div>
+        <div class="social-row" id="socialStrip"></div>
+      </section>
+
+      <section class="surface-card section-card hidden" id="hoursCard">
+        <div class="section-head compact">
+          <h2>ساعات العمل</h2>
+        </div>
+        <div id="workingHoursText" class="hours-line"></div>
+      </section>
+
+      <section class="surface-card section-card" id="locationsCard">
+        <div class="section-head compact">
+          <h2>العناوين</h2>
+        </div>
+        <div id="locationsList" class="locations-list"></div>
+      </section>
+
+      <section class="surface-card section-card survey-card" id="surveyCard">
+        <div class="survey-head">
+          <h2>التقييم</h2>
+          <div class="step-indicator">
+            <span class="step-dot active" data-step-dot="1"></span>
+            <span class="step-dot" data-step-dot="2"></span>
+            <span class="step-dot" data-step-dot="3"></span>
+          </div>
+        </div>
+
+        <form id="surveyForm" class="survey-form" novalidate>
+          <div class="step-panel active" data-step-panel="1">
+            <label class="field">
+              <span>الموسم</span>
+              <select id="season" name="season" required></select>
+            </label>
+            <label class="field">
+              <span>الاسم</span>
+              <input id="customerName" name="customerName" type="text" required minlength="3" maxlength="80" />
+            </label>
+            <label class="field">
+              <span>رقم الهاتف</span>
+              <input id="phone" name="phone" type="tel" required inputmode="tel" />
+            </label>
+            <label class="field">
+              <span>العنوان</span>
+              <input id="address" name="address" type="text" required minlength="4" maxlength="160" />
+            </label>
+            <button id="nextToStep2" type="button" class="primary-btn">التالي</button>
+          </div>
+
+          <div class="step-panel" data-step-panel="2">
+            <div class="rating-box">
+              <div class="rating-title">جودة البضاعة</div>
+              <div class="rating-scale" data-rating-field="productRating"></div>
+              <input type="hidden" id="productRating" name="productRating" required />
+            </div>
+            <div class="rating-box">
+              <div class="rating-title">الخدمة</div>
+              <div class="rating-scale" data-rating-field="serviceRating"></div>
+              <input type="hidden" id="serviceRating" name="serviceRating" required />
+            </div>
+            <div class="dual-actions">
+              <button id="backToStep1" type="button" class="ghost-btn">رجوع</button>
+              <button id="nextToStep3" type="button" class="primary-btn">التالي</button>
+            </div>
+          </div>
+
+          <div class="step-panel" data-step-panel="3">
+            <label class="field">
+              <span>ملاحظات</span>
+              <textarea id="notes" name="notes" rows="4" maxlength="700"></textarea>
+            </label>
+            <div class="dual-actions">
+              <button id="backToStep2" type="button" class="ghost-btn">رجوع</button>
+              <button id="submitSurveyBtn" type="submit" class="primary-btn">إرسال</button>
+            </div>
+          </div>
+
+          <div id="surveyStatus" class="status-box hidden"></div>
+        </form>
+      </section>
+    </main>
+
+    <div id="thankYouCard" class="thanks-sheet hidden" aria-hidden="true">
+      <div class="thanks-mark">✓</div>
+      <div class="thanks-text">شكرًا لك</div>
+    </div>
+  </div>
+
+  <div id="adminModal" class="admin-modal hidden" aria-hidden="true">
+    <div id="adminBackdrop" class="admin-backdrop"></div>
+    <div class="admin-sheet">
+      <div class="admin-topbar">
+        <div>
+          <div class="eyebrow">لوحة الإدارة</div>
+          <h2>Jood Kids</h2>
+        </div>
+        <button id="closeAdminBtn" class="icon-btn" aria-label="إغلاق">×</button>
+      </div>
+
+      <div id="adminGate" class="admin-gate">
+        <div class="admin-card">
+          <form id="adminLoginForm" class="admin-form">
+            <label class="field">
+              <span>البريد الإلكتروني</span>
+              <input id="adminEmail" type="email" required />
+            </label>
+            <label class="field">
+              <span>كلمة المرور</span>
+              <input id="adminPassword" type="password" required />
+            </label>
+            <button type="submit" class="primary-btn">دخول</button>
+          </form>
+          <div id="adminLoginStatus" class="status-box hidden"></div>
+        </div>
+      </div>
+
+      <div id="adminDashboard" class="admin-dashboard hidden">
+        <div class="admin-toolbar">
+          <div class="admin-user-badge">
+            <span class="eyebrow">UID</span>
+            <strong id="adminUserUid"></strong>
+          </div>
+          <button id="logoutBtn" class="ghost-btn mini">خروج</button>
+        </div>
+
+        <div class="tab-switcher">
+          <button class="tab-btn active" data-admin-tab="overview">الملخص</button>
+          <button class="tab-btn" data-admin-tab="company">الشركة</button>
+          <button class="tab-btn" data-admin-tab="responses">الردود</button>
+        </div>
+
+        <section id="adminTabOverview" class="admin-tab active">
+          <div class="stats-grid">
+            <article class="stat-card"><span>الإجمالي</span><strong id="statResponses">0</strong></article>
+            <article class="stat-card"><span>البضاعة</span><strong id="statProduct">0.0</strong></article>
+            <article class="stat-card"><span>الخدمة</span><strong id="statService">0.0</strong></article>
+            <article class="stat-card"><span>آخر إدخال</span><strong id="statUpdated">—</strong></article>
+          </div>
+          <div class="admin-card">
+            <h3>حسب الموسم</h3>
+            <div id="seasonAverages" class="season-averages"></div>
+          </div>
+        </section>
+
+        <section id="adminTabCompany" class="admin-tab">
+          <div class="admin-card">
+            <form id="companySettingsForm" class="admin-form">
+              <label class="field"><span>اسم الشركة</span><input id="companyNameInput" type="text" required /></label>
+              <label class="field"><span>رابط اللوجو</span><input id="companyLogoInput" type="url" /></label>
+              <label class="field"><span>ساعات العمل</span><input id="companyHoursInput" type="text" /></label>
+              <label class="field"><span>أرقام التواصل</span><textarea id="companyPhonesInput" rows="3"></textarea></label>
+              <label class="field"><span>واتساب</span><input id="companyWhatsappInput" type="text" /></label>
+              <label class="field"><span>البريد الإلكتروني</span><input id="companyEmailInput" type="email" /></label>
+              <label class="field"><span>الموقع الرسمي</span><input id="companyWebsiteInput" type="url" /></label>
+              <label class="field"><span>المواسم</span><textarea id="seasonsInput" rows="3"></textarea></label>
+              <label class="field"><span>العناوين</span><textarea id="locationsInput" rows="5" placeholder="الفرع | العنوان | رابط الخريطة"></textarea></label>
+              <label class="field"><span>Facebook</span><input id="facebookInput" type="url" /></label>
+              <label class="field"><span>Instagram</span><input id="instagramInput" type="url" /></label>
+              <label class="field"><span>X</span><input id="xInput" type="url" /></label>
+              <label class="field"><span>TikTok</span><input id="tiktokInput" type="url" /></label>
+              <label class="field"><span>Snapchat</span><input id="snapchatInput" type="url" /></label>
+              <label class="field"><span>LinkedIn</span><input id="linkedinInput" type="url" /></label>
+              <button type="submit" class="primary-btn">حفظ</button>
+              <div id="settingsStatus" class="status-box hidden"></div>
+            </form>
+          </div>
+        </section>
+
+        <section id="adminTabResponses" class="admin-tab">
+          <div class="admin-card responses-card">
+            <div class="filters-row">
+              <select id="responseSeasonFilter"></select>
+              <input id="responseSearchInput" type="search" placeholder="بحث" />
+            </div>
+            <button id="exportCsvBtn" type="button" class="ghost-btn export-btn">تصدير CSV</button>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>الاسم</th>
+                    <th>الهاتف</th>
+                    <th>الموسم</th>
+                    <th>البضاعة</th>
+                    <th>الخدمة</th>
+                    <th>الملاحظات</th>
+                    <th>التاريخ</th>
+                  </tr>
+                </thead>
+                <tbody id="responsesTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
