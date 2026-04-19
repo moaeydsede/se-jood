@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == 'JxKXouwjdadht4wSMPf1qtbeW9n1';
+    }
+
+    function validString(field, min, max) {
+      return request.resource.data[field] is string
+        && request.resource.data[field].size() >= min
+        && request.resource.data[field].size() <= max;
+    }
+
+    match /settings/companyProfile {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /surveyResponses/{docId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if request.resource.data.keys().hasOnly([
+          'season',
+          'customerName',
+          'phone',
+          'address',
+          'productRating',
+          'serviceRating',
+          'notes',
+          'createdAtMs',
+          'createdAtText'
+        ])
+        && validString('season', 1, 60)
+        && validString('customerName', 3, 80)
+        && validString('phone', 7, 20)
+        && validString('address', 4, 160)
+        && request.resource.data.productRating is int
+        && request.resource.data.productRating >= 1
+        && request.resource.data.productRating <= 5
+        && request.resource.data.serviceRating is int
+        && request.resource.data.serviceRating >= 1
+        && request.resource.data.serviceRating <= 5
+        && request.resource.data.notes is string
+        && request.resource.data.notes.size() <= 800
+        && request.resource.data.createdAtMs is int
+        && request.resource.data.createdAtText is string
+        && request.resource.data.createdAtText.size() <= 80;
+    }
+  }
+}
